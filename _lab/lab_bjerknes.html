@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab: Vilhelm Bjerknes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <nav class="bg-white border-b h-14 flex items-center px-4">
+        <a href="labs.html" class="text-slate-600 hover:text-blue-600 font-bold"><i class="fa-solid fa-arrow-left"></i> Labs</a>
+    </nav>
+    <div class="max-w-4xl mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-2">Bjerknes Frontal Theory</h1>
+        <p class="text-slate-500 mb-6">찬 공기와 따뜻한 공기가 만나는 '전선'의 개념을 시각화합니다.</p>
+        
+        <div class="bg-white p-4 rounded-xl shadow-md border flex flex-col items-center">
+            <canvas id="frontCanvas" width="600" height="300" class="bg-slate-100 rounded-lg mb-4"></canvas>
+            <div class="flex gap-2">
+                <button onclick="drawColdFront()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">한랭 전선 (Cold Front)</button>
+                <button onclick="drawWarmFront()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">온난 전선 (Warm Front)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('frontCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawColdFront() {
+            clearCanvas();
+            // 찬 공기 (파랑)
+            ctx.fillStyle = "rgba(59, 130, 246, 0.5)";
+            ctx.beginPath();
+            ctx.moveTo(0, 300);
+            ctx.lineTo(300, 300); // 쐐기 모양
+            ctx.lineTo(0, 0);
+            ctx.fill();
+            
+            ctx.fillStyle = "blue";
+            ctx.font = "20px sans-serif";
+            ctx.fillText("Cold Air (Fast)", 20, 250);
+
+            // 따뜻한 공기 (빨강) - 상승
+            ctx.fillStyle = "rgba(239, 68, 68, 0.3)";
+            ctx.beginPath();
+            ctx.moveTo(300, 300);
+            ctx.lineTo(600, 300);
+            ctx.lineTo(600, 0);
+            ctx.lineTo(0, 0);
+            ctx.fill();
+
+            ctx.fillStyle = "red";
+            ctx.fillText("Warm Air (Rising)", 350, 150);
+            
+            // 전선면
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(0,0); ctx.lineTo(300,300);
+            ctx.stroke();
+        }
+
+        function drawWarmFront() {
+            clearCanvas();
+             // 찬 공기 (파랑) - 물러남
+            ctx.fillStyle = "rgba(59, 130, 246, 0.3)";
+            ctx.beginPath();
+            ctx.moveTo(600, 300);
+            ctx.lineTo(200, 300);
+            ctx.lineTo(600, 150); 
+            ctx.fill();
+            
+            ctx.fillStyle = "blue";
+            ctx.fillText("Cold Air (Slow)", 400, 280);
+
+            // 따뜻한 공기 (빨강) - 타고 오름
+            ctx.fillStyle = "rgba(239, 68, 68, 0.5)";
+            ctx.beginPath();
+            ctx.moveTo(0, 300);
+            ctx.lineTo(200, 300);
+            ctx.lineTo(600, 150);
+            ctx.lineTo(600, 0);
+            ctx.lineTo(0, 0);
+            ctx.fill();
+
+            ctx.fillStyle = "red";
+            ctx.fillText("Warm Air", 100, 200);
+
+            // 전선면
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(200,300); ctx.lineTo(600,150);
+            ctx.stroke();
+        }
+
+        // 초기 화면
+        drawColdFront();
+    </script>
+</body>
+</html>
