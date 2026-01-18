@@ -2,8 +2,14 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab: Edward Lorenz</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap'); body { font-family: 'Noto Sans KR', sans-serif; }</style>
 </head>
@@ -127,8 +133,6 @@
             const cx = canvas.width / 2;
             const cy = canvas.height / 1.8; // 약간 아래로
 
-            const px1 = cx + (x1 * scale);
-            const py1 = cy - (z1 * scale) + (canvas.height * 0.4); // z축을 y화면 좌표로, y축은 깊이감 표현에 사용 안함(단순화)
             // 더 나은 시각화를 위해 x, z 평면 대신 x, y+z 변환 사용
             // 단순 투영: x축 -> 화면 x, z축 -> 화면 y
             
