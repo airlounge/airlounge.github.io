@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab: Syukuro Manabe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap'); body { font-family: 'Noto Sans KR', sans-serif; }</style>
+</head>
+<body class="bg-orange-50 text-slate-800">
+    <nav class="bg-white border-b border-orange-100 h-14 flex items-center px-4 sticky top-0 z-50">
+        <a href="labs.html" class="flex items-center gap-2 text-slate-600 hover:text-orange-600 font-bold">
+            <i class="fa-solid fa-arrow-left"></i> 랩 목록
+        </a>
+    </nav>
+
+    <div class="max-w-4xl mx-auto p-6">
+        <header class="mb-8 text-center">
+            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Climate Modeling</span>
+            <h1 class="text-3xl font-black mt-3 mb-2 text-slate-900">슈쿠로 마나베 (Syukuro Manabe)</h1>
+            <p class="text-slate-600">2021년 노벨 물리학상. 복사-대류 평형 모델을 통해 $CO_2$와 기온 상승의 관계를 정립했습니다.</p>
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-lg border border-orange-200 p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-lg font-bold text-slate-700 mb-2">이산화탄소 농도 (CO<sub>2</sub> ppm)</label>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm font-bold text-slate-400">280 (산업화이전)</span>
+                            <input type="range" id="co2Range" min="280" max="840" value="420" class="flex-1 h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600">
+                            <span class="text-sm font-bold text-slate-400">840</span>
+                        </div>
+                        <div class="text-center mt-2">
+                            <span id="co2Value" class="text-4xl font-black text-orange-600">420</span> <span class="text-slate-500">ppm</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h4 class="font-bold text-slate-700 mb-2">단순화된 예측 공식</h4>
+                        <p class="text-sm text-slate-600 mb-2">
+                            $$ \Delta T \approx \alpha \ln\left(\frac{C}{C_0}\right) $$
+                        </p>
+                        <ul class="text-xs text-slate-500 list-disc list-inside">
+                            <li>$C$: 현재 농도</li>
+                            <li>$C_0$: 기준 농도 (280ppm)</li>
+                            <li>$\alpha$: 기후 민감도 상수</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center justify-center p-6 bg-orange-50/50 rounded-xl border border-orange-100">
+                    <div class="relative w-24 h-64 bg-white rounded-full border-4 border-slate-200 shadow-inner flex items-end justify-center mb-4 overflow-hidden">
+                        <div id="tempBar" class="w-full bg-red-500 transition-all duration-700 ease-out opacity-80" style="height: 10%;"></div>
+                        <div class="absolute inset-0 flex flex-col justify-between py-4 pointer-events-none">
+                            <div class="w-full h-[1px] bg-slate-300"></div>
+                            <div class="w-full h-[1px] bg-slate-300"></div>
+                            <div class="w-full h-[1px] bg-slate-300"></div>
+                            <div class="w-full h-[1px] bg-slate-300"></div>
+                            <div class="w-full h-[1px] bg-slate-300"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-slate-500 text-sm font-bold">지표 기온 상승분</p>
+                        <p id="tempOutput" class="text-5xl font-black text-red-600 mt-1">+0.0°C</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('co2Range');
+        const co2Display = document.getElementById('co2Value');
+        const tempDisplay = document.getElementById('tempOutput');
+        const tempBar = document.getElementById('tempBar');
+
+        // 기준 농도
+        const C0 = 280;
+        // 민감도 계수 (대략적으로 농도 2배시 3도 상승 가정 => 3 = alpha * ln(2) => alpha ≈ 4.32)
+        // 하지만 여기선 시각적 효과를 위해 단순화
+        const alpha = 4.3; 
+
+        function update() {
+            const C = parseInt(slider.value);
+            co2Display.innerText = C;
+
+            // 계산
+            const deltaT = alpha * Math.log(C / C0);
+            
+            // UI 업데이트
+            tempDisplay.innerText = "+" + deltaT.toFixed(2) + "°C";
+            
+            // 바 높이 (최대 5도 상승을 100%로 잡음)
+            const percentage = Math.min((deltaT / 6) * 100, 100); 
+            tempBar.style.height = Math.max(percentage, 5) + "%";
+            
+            // 색상 변경 (온도가 높을수록 진한 빨강)
+            if(deltaT > 4) tempBar.className = "w-full bg-purple-600 transition-all duration-700 ease-out opacity-90";
+            else if(deltaT > 2) tempBar.className = "w-full bg-red-600 transition-all duration-700 ease-out opacity-90";
+            else tempBar.className = "w-full bg-orange-400 transition-all duration-700 ease-out opacity-80";
+        }
+
+        slider.addEventListener('input', update);
+        update(); // 초기 실행
+    </script>
+</body>
+</html>
