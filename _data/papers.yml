@@ -1,0 +1,41 @@
+# _data/papers.yml
+
+- title: "Significance of Time-Series Consistency in Evaluating Machine Learning Models for Gap-Filling Multi-Level Very Tall Tower Data"
+  authors: "Park, C."
+  journal: "Mach. Learn. Knwol. Extr."
+  year: 2025
+  vol: "7, 76"
+  link: "#"
+  note: ""
+
+- title: "A Study on the Generation of Fine Dust and Topographical Inflow Characteristics Using Atmospheric Modeling (WRF)"
+  authors: "Choi, H.J.*, C. Park, K. Lee"
+  journal: "J. Korean Earth Sci. Soc."
+  year: 2023
+  vol: "44(5), 373-402"
+  link: "#"
+  note: "대기모델링(WRF)을 이용한 미세먼지의 발생과 지형학적 유입 특성 연구"
+
+- title: "Comparison of Machine Learning Model Performance based on Observation Methods using Naked-eye and Visibility-meter"
+  authors: "Park, C., S.-H. Lee*"
+  journal: "J. Korean Earth Sci. Soc."
+  year: 2023
+  vol: "44(2), 105-118"
+  link: "#"
+  note: "머신러닝을 이용한 안개 예측 시 목측과 시정계 계측 방법에 따른 모델 성능 차이 비교"
+
+- title: "Characteristics of atmospheric CO2 fluxes and the estimation of their potential sources around Boseong Standard Weather Observatory (BSWO)"
+  authors: "Park, C., Y.-T. Lee, S.-H. Lee*"
+  journal: "Atmos. Environ."
+  year: 2021
+  vol: "252, 118340"
+  link: "https://www.sciencedirect.com/science/article/abs/pii/S1352231021001588"
+  note: ""
+
+- title: "Effects of meteorology and air pollution on respiratory disease affecting vulnerable populations"
+  authors: "Kang, D., C. Park, W.-S. Jung, K.O. Lee and H.W. Lee"
+  journal: "J. Environ. Sci. Int."
+  year: 2020
+  vol: "29(6), 579-603"
+  link: "https://koreascience.kr/article/JAKO202022449681263.page"
+  note: "기상 및 대기질이 건강취약집단에 미치는 영향"
