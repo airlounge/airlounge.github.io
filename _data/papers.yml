@@ -5,31 +5,31 @@
   journal: "Mach. Learn. Knwol. Extr."
   year: 2025
   vol: "7, 76"
-  link: "#"
+  link: "https://doi.org/10.3390/make7030076"
   note: ""
 
 - title: "A Study on the Generation of Fine Dust and Topographical Inflow Characteristics Using Atmospheric Modeling (WRF)"
-  authors: "Choi, H.J.*, C. Park, K. Lee"
+  authors: "Choi, H.J., C. Park, K. Lee"
   journal: "J. Korean Earth Sci. Soc."
   year: 2023
   vol: "44(5), 373-402"
-  link: "#"
+  link: "https://doi.org/10.5467/JKESS.2023.44.5.373"
   note: "대기모델링(WRF)을 이용한 미세먼지의 발생과 지형학적 유입 특성 연구"
 
 - title: "Comparison of Machine Learning Model Performance based on Observation Methods using Naked-eye and Visibility-meter"
-  authors: "Park, C., S.-H. Lee*"
+  authors: "Park, C., S.-H. Lee"
   journal: "J. Korean Earth Sci. Soc."
   year: 2023
   vol: "44(2), 105-118"
-  link: "#"
+  link: "https://doi.org/10.5467/JKESS.2023.44.2.105"
   note: "머신러닝을 이용한 안개 예측 시 목측과 시정계 계측 방법에 따른 모델 성능 차이 비교"
 
 - title: "Characteristics of atmospheric CO2 fluxes and the estimation of their potential sources around Boseong Standard Weather Observatory (BSWO)"
-  authors: "Park, C., Y.-T. Lee, S.-H. Lee*"
+  authors: "Park, C., Y.-T. Lee, S.-H. Lee"
   journal: "Atmos. Environ."
   year: 2021
   vol: "252, 118340"
-  link: "https://www.sciencedirect.com/science/article/abs/pii/S1352231021001588"
+  link: "https://doi.org/10.1016/j.atmosenv.2021.118340"
   note: ""
 
 - title: "Effects of meteorology and air pollution on respiratory disease affecting vulnerable populations"
@@ -37,5 +37,31 @@
   journal: "J. Environ. Sci. Int."
   year: 2020
   vol: "29(6), 579-603"
-  link: "https://koreascience.kr/article/JAKO202022449681263.page"
+  link: "https://doi.org/10.5322/JESI.2020.29.7.715"
   note: "기상 및 대기질이 건강취약집단에 미치는 영향"
+
+- title: "Numerical simulation of atmospheric CO2 concentration and flux over the Korean Peninsula using WRF-VPRM model during Korus-AQ 2016 campaign"
+  authors: "Park, C.*, S.-Y. Park, K.R. Gurney, C. Gerbig, J. P. DiGangi, Y. Choi, and H.W. Lee,"
+  journal: "PloS ONE"
+  year: 2020
+  vol: "15, 1"
+  link: "https://doi.org/10.1371/journal.pone.0228106"
+  note: ""
+
+- title: "Investigating the regional difference of aerosol feedback effects over South Korea using the WRF-CMAQ two-way coupled modeling system,"
+  authors: "Yoo, J.-W, W. Jeon, S.-Y. Park, C. Park, J. Jung, S.-H. Lee, H. W. Lee"
+  journal: "Atmos. Environ"
+  year: 2019
+  vol: "218, 116968"
+  link: "https://doi.org/10.1016/j.atmosenv.2019.116968"
+  note: ""
+
+- title: "Adjoint sensitivity of inland ozone to its precursors and meteorological and chemical influences"
+  authors: "Park, S.-Y, C. Park, J.-W. You, S.-H. Lee and H. W. Lee"
+  journal: "Atmos. Environ."
+  year: 2018
+  vol: "192, 104-115"
+  link: "https://doi.org/10.1016/j.atmosenv.2018.08.006"
+  note: ""
+
+  
