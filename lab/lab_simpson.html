@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab: Joanne Simpson</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap'); body { font-family: 'Noto Sans KR', sans-serif; }</style>
+</head>
+<body class="bg-blue-50 text-slate-800">
+    <nav class="bg-white border-b border-blue-100 h-14 flex items-center px-4 sticky top-0 z-50">
+        <a href="labs.html" class="flex items-center gap-2 text-slate-600 hover:text-blue-600 font-bold">
+            <i class="fa-solid fa-arrow-left"></i> 랩 목록
+        </a>
+    </nav>
+
+    <div class="max-w-4xl mx-auto p-6">
+        <header class="mb-8 text-center">
+            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Tropical Meteorology</span>
+            <h1 class="text-3xl font-black mt-3 mb-2 text-blue-900">조앤 심슨 (Joanne Simpson)</h1>
+            <p class="text-blue-700/80">최초의 여성 기상학 박사. "Hot Tower" 가설을 통해 허리케인의 에너지 수송 과정을 규명했습니다.</p>
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-xl border border-blue-100 p-8 text-center">
+            <div class="relative h-96 bg-gradient-to-b from-blue-400 to-blue-100 rounded-xl overflow-hidden mb-8 shadow-inner border border-blue-200">
+                <div class="absolute bottom-0 w-full h-8 bg-blue-600 z-20 opacity-80"></div>
+                
+                <canvas id="cloudCanvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+                
+                <div class="absolute top-4 left-4 text-white text-left text-xs opacity-80 font-mono">
+                    Altitude: 15km (Tropopause)<br>
+                    Temp: -60°C
+                </div>
+            </div>
+
+            <button onclick="launchHotTower()" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-full font-bold shadow-lg transition transform active:scale-95 text-lg flex items-center gap-3 mx-auto">
+                <i class="fa-solid fa-cloud-bolt"></i> 핫 타워(Hot Tower) 생성
+            </button>
+            
+            <div class="mt-6 bg-blue-50 p-4 rounded-lg text-sm text-blue-800 text-left">
+                <h4 class="font-bold mb-1"><i class="fa-solid fa-info-circle"></i> Hot Tower란?</h4>
+                <p>열대 저기압 내부에서 매우 빠르게 솟구치는 적란운 기둥입니다. 해수면의 잠열(Latent Heat)을 성층권 근처까지 고속으로 수송하여 태풍의 '엔진' 역할을 합니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('cloudCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let clouds = [];
+
+        function resize() {
+            width = canvas.width = canvas.parentElement.offsetWidth;
+            height = canvas.height = canvas.parentElement.offsetHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function launchHotTower() {
+            // 구름 객체 생성 (바닥에서 시작)
+            clouds.push({
+                x: width/2 + (Math.random()-0.5)*100,
+                y: height - 20,
+                w: 60,
+                h: 20,
+                life: 1.0,
+                speed: 3 + Math.random()*2
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+
+            clouds.forEach((c, index) => {
+                // 구름 상승 로직
+                c.y -= c.speed;
+                c.h += 1; // 키가 커짐
+                c.w += 0.2; // 약간 뚱뚱해짐
+                c.life -= 0.005;
+
+                // 구름 그리기
+                ctx.fillStyle = `rgba(255, 255, 255, ${c.life})`;
+                ctx.beginPath();
+                
+                // 단순한 구름 모양 (여러개의 원)
+                const circles = 5;
+                for(let i=0; i<circles; i++) {
+                    let cx = c.x + (i - circles/2) * (c.w/circles);
+                    let cy = c.y - (i % 2) * 10;
+                    let r = c.w / 3;
+                    ctx.arc(cx, cy, r, 0, Math.PI*2);
+                    // 타워의 몸통
+                    ctx.rect(c.x - c.w/2, c.y, c.w, height - c.y);
+                }
+                ctx.fill();
+
+                // 빨간색 열 에너지 화살표
+                if (c.y % 20 < 10) {
+                    ctx.fillStyle = "rgba(239, 68, 68, 0.8)"; // Red
+                    ctx.font = "20px FontAwesome";
+                    ctx.fillText("\uf062", c.x - 10, c.y + 40); // Up arrow icon
+                }
+
+                if (c.y < 50 || c.life <= 0) {
+                    // 대류권계면 도달 시 퍼짐
+                    clouds.splice(index, 1);
+                }
+            });
+
+            // 대류권계면 라인
+            ctx.strokeStyle = "rgba(255,255,255,0.3)";
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath(); ctx.moveTo(0, 50); ctx.lineTo(width, 50); ctx.stroke();
+            ctx.setLineDash([]);
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
