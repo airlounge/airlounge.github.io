@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab: Jule Charney</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap'); body { font-family: 'Noto Sans KR', sans-serif; }</style>
+</head>
+<body class="bg-violet-50 text-slate-800">
+    <nav class="bg-white border-b border-violet-100 h-14 flex items-center px-4 sticky top-0 z-50">
+        <a href="labs.html" class="flex items-center gap-2 text-slate-600 hover:text-violet-600 font-bold">
+            <i class="fa-solid fa-arrow-left"></i> 랩 목록
+        </a>
+    </nav>
+
+    <div class="max-w-4xl mx-auto p-6">
+        <header class="mb-8 text-center">
+            <span class="bg-violet-100 text-violet-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Dynamic Meteorology</span>
+            <h1 class="text-3xl font-black mt-3 mb-2 text-slate-900">쥴 차니 (Jule Charney)</h1>
+            <p class="text-slate-600">준지균 이론(Quasi-Geostrophic Theory)과 경압 불안정을 통해 날씨 시스템의 발달을 수학적으로 증명했습니다.</p>
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-xl border border-violet-200 p-8 flex flex-col items-center">
+            <h3 class="font-bold text-violet-800 mb-4">Baroclinic Instability Growth Rate</h3>
+            
+            <div class="relative w-full max-w-lg h-64 border-l-2 border-b-2 border-slate-300 mb-6">
+                <canvas id="charneyCanvas" class="w-full h-full"></canvas>
+                <div class="absolute bottom-2 right-0 text-xs text-slate-500 font-bold">Wavenumber (k) &rarr;</div>
+                <div class="absolute top-0 left-2 text-xs text-slate-500 font-bold">&uarr; Growth Rate ($\sigma$)</div>
+            </div>
+
+            <div class="bg-violet-50 p-6 rounded-xl text-center max-w-lg">
+                <p class="text-sm text-slate-700 leading-relaxed">
+                    차니는 모든 파동이 발달하는 것이 아니라, <strong class="text-violet-700">특정 파장(약 3,000~4,000km)의 파동만이 불안정하여 급격히 성장</strong>한다는 것을 밝혔습니다. 이것이 바로 우리가 일기도에서 보는 온대 저기압들입니다.
+                </p>
+                <div class="mt-4 flex justify-center gap-2">
+                    <span class="px-3 py-1 bg-white rounded border border-violet-200 text-xs text-slate-500">Short Wave (Decay)</span>
+                    <span class="px-3 py-1 bg-violet-600 text-white rounded border border-violet-600 text-xs font-bold">Cyclone Scale (Growth)</span>
+                    <span class="px-3 py-1 bg-white rounded border-violet-200 text-xs text-slate-500">Long Wave (Slow)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('charneyCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Canvas 해상도 조정
+        canvas.width = canvas.parentElement.offsetWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+
+        function drawGraph() {
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            ctx.clearRect(0,0,w,h);
+
+            ctx.beginPath();
+            ctx.strokeStyle = "#7c3aed"; // violet-600
+            ctx.lineWidth = 4;
+            
+            // 차니의 불안정 곡선 (가우시안 형태와 유사)
+            // 중간 파수에서 최대 성장률을 가짐
+            
+            ctx.moveTo(0, h); // 시작점 (파수 0)
+            
+            for(let x = 0; x <= w; x+=5) {
+                // x좌표를 파수로 가정. 중앙(w/2)에서 피크
+                let normalizedX = (x - w * 0.4) / (w * 0.15); 
+                let yValue = Math.exp(-normalizedX * normalizedX); // 0~1 사이 값
+                
+                // 단파(오른쪽 끝)에서는 컷오프(Cut-off)되어 성장률 0
+                if(x > w * 0.8) yValue = 0;
+
+                let plotY = h - (yValue * (h * 0.8)); // 높이 조정
+                ctx.lineTo(x, plotY);
+            }
+            ctx.stroke();
+
+            // 최대 성장률 지점 표시
+            ctx.fillStyle = "#7c3aed";
+            ctx.font = "bold 14px sans-serif";
+            ctx.fillText("Max Instability", w * 0.4 - 40, h * 0.1);
+        }
+
+        window.addEventListener('resize', () => {
+             canvas.width = canvas.parentElement.offsetWidth;
+             canvas.height = canvas.parentElement.offsetHeight;
+             drawGraph();
+        });
+        drawGraph();
+    </script>
+</body>
+</html>
