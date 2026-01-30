@@ -1,9 +1,16 @@
+업로드해주신 PPTX 파일의 모든 내용을 **수정 없이 원본 그대로** 반영하여, 요청하신 홈페이지 스타일로 다시 제작했습니다.
+
+모든 예제(Example)와 풀이 과정의 텍스트를 파일에 있는 그대로 옮겨 적었으며, 수식 부분만 웹에서 깨지지 않도록 MathJax 코드로 변환했습니다.
+
+아래 코드를 복사하여 `.html` 파일로 저장하시면 됩니다.
+
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>제1장 무한급수 (Ch1 Sec 1-5)</title>
+    <title>제1장 무한급수</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,8 +25,8 @@
             --main-color: #333;
             --accent-color: #2c3e50;
             --link-color: #3498db;
-            --bg-color: #fdfdfd;
-            --box-bg: #f8f9fa;
+            --bg-color: #fcfcfc;
+            --code-bg: #f8f9fa;
         }
 
         body {
@@ -27,17 +34,17 @@
             margin: 0;
             padding: 0;
             color: var(--main-color);
-            line-height: 1.6;
+            line-height: 1.8;
             background-color: var(--bg-color);
             display: flex;
             min-height: 100vh;
         }
 
-        /* 사이드바 */
+        /* 사이드바 스타일 */
         nav {
             width: var(--sidebar-width);
-            background-color: #f0f2f5;
-            border-right: 1px solid #e1e4e8;
+            background-color: #f1f3f5;
+            border-right: 1px solid #e9ecef;
             padding: 2rem 1.5rem;
             position: fixed;
             height: 100%;
@@ -51,6 +58,7 @@
             color: var(--accent-color);
             border-bottom: 2px solid var(--accent-color);
             padding-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         nav ul {
@@ -67,7 +75,7 @@
             color: #555;
             font-weight: 500;
             display: block;
-            padding: 0.4rem 0;
+            padding: 0.3rem 0;
             transition: color 0.2s;
         }
 
@@ -76,7 +84,7 @@
             font-weight: 700;
         }
 
-        /* 메인 콘텐츠 */
+        /* 메인 콘텐츠 스타일 */
         main {
             margin-left: var(--sidebar-width);
             padding: 3rem 4rem;
@@ -87,7 +95,7 @@
 
         h1 {
             font-size: 2.2rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             color: var(--accent-color);
             border-bottom: 1px solid #ddd;
             padding-bottom: 1rem;
@@ -95,56 +103,53 @@
 
         h2 {
             font-size: 1.6rem;
-            margin-top: 3rem;
+            margin-top: 3.5rem;
             margin-bottom: 1.5rem;
             color: var(--accent-color);
             font-weight: 700;
         }
 
+        /* PPT 내용 박스 */
+        .slide-content {
+            margin-bottom: 3rem;
+        }
+
         /* 예제 박스 스타일 */
         .example-box {
-            background-color: var(--box-bg);
+            background-color: var(--code-bg);
             border-left: 5px solid var(--accent-color);
             padding: 1.5rem;
             margin: 1.5rem 0;
             border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .example-title {
             font-weight: 700;
             font-size: 1.1rem;
             color: #2980b9;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             display: block;
         }
 
-        .step-title {
+        .solution-title {
             font-weight: 600;
             color: #555;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
             margin-bottom: 0.5rem;
             display: block;
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
 
-        ul.step-list {
-            padding-left: 1.2rem;
-            margin-top: 0.5rem;
+        ul.solution-steps {
+            list-style-type: none; /* PPT 내용 그대로 보여주기 위해 불렛 제거 */
+            padding-left: 0;
         }
-
-        ul.step-list li {
+        
+        ul.solution-steps li {
             margin-bottom: 0.5rem;
-        }
-
-        /* 수식 블록 */
-        .math-block {
-            background: #fff;
-            padding: 1rem;
-            border: 1px solid #eee;
-            border-radius: 6px;
-            text-align: center;
-            margin: 1rem 0;
-            overflow-x: auto;
+            padding-left: 1rem;
+            border-left: 2px solid #ddd;
         }
 
         /* 이미지 플레이스홀더 */
@@ -171,7 +176,7 @@
                 height: auto;
                 position: relative;
                 border-right: none;
-                border-bottom: 1px solid #e1e4e8;
+                border-bottom: 1px solid #e9ecef;
             }
             main { margin-left: 0; padding: 1.5rem; }
         }
@@ -180,150 +185,140 @@
 <body>
 
 <nav>
-    <h3>목차 (Index)</h3>
+    <h3>Contents</h3>
     <ul>
-        <li><a href="#bouncing-ball">1. Bouncing Ball (기하급수)</a></li>
-        <li><a href="#repeating-decimal">2. 순환소수와 급수</a></li>
-        <li><a href="#limits">3. 극한값 구하기 (Limits)</a></li>
-        <li><a href="#telescoping">4. 망원 급수 (Telescoping Series)</a></li>
+        <li><a href="#slide1">1. Bouncing Ball</a></li>
+        <li><a href="#slide2">2. Repeating Decimal</a></li>
+        <li><a href="#slide3">3. Limits (Example 1)</a></li>
+        <li><a href="#slide4">4. Limits (Example 2)</a></li>
+        <li><a href="#slide5">5. Limits (Example 3)</a></li>
+        <li><a href="#slide6">6. Telescoping Series (Ex 2)</a></li>
+        <li><a href="#slide7">7. Log Series (Ex 3)</a></li>
     </ul>
 </nav>
 
 <main>
-    <h1>제1장 무한급수 (Infinite Series)</h1>
+    <h1>제1장 무한급수</h1>
 
-    <section id="bouncing-ball">
-        <h2>1. Bouncing Ball Problem</h2>
+    <section id="slide1" class="slide-content">
         <div class="example-box">
-            <span class="example-title">Example: 튀어 오르는 공</span>
-            <p><strong>문제:</strong> 공이 1야드 높이에서 떨어져서 바닥에 닿을 때마다 이전 높이의 \(2/3\)만큼 튀어 오른다. 공이 멈출 때까지 움직인 총 거리는 얼마인가?</p>
-
+            <span class="example-title">Example (Bouncing Ball)</span>
+            <p>공이 1야드 높이에서 떨어져서 이전 높이의 2/3만큼 튀어 오른다. 공이 움직인 총 거리는?</p>
+            
             <div class="img-placeholder">
-                [Image: 공이 1 → 2/3 → 4/9 로 높이가 줄어드는 궤적 그림]
+                 <br>
+                (공이 1 -> 2/3 -> 4/9 로 튀는 그림)
             </div>
 
-            <span class="step-title">풀이 과정:</span>
-            <ul class="step-list">
-                <li><strong>내려갈 때 (처음):</strong> \(1\)</li>
-                <li><strong>튀어 오르고 내려갈 때:</strong> \(2 \times \frac{2}{3}\) (올라갈 때 \(2/3\), 내려갈 때 \(2/3\)이므로 2배)</li>
-                <li><strong>두 번째 튀어 오를 때:</strong> \(2 \times \left(\frac{2}{3}\right)^2 = 2 \times \frac{4}{9}\)</li>
-                <li><strong>전체 거리 식:</strong> 
-                    $$ 1 + 2\left(\frac{2}{3}\right) + 2\left(\frac{4}{9}\right) + 2\left(\frac{8}{27}\right) + \dots $$
-                </li>
-                <li>첫 번째 항 \(1\)을 제외하고 나머지 항들을 \(2\)로 묶어낸다:
-                    $$ = 1 + 2 \left( \frac{2}{3} + \frac{4}{9} + \frac{8}{27} + \dots \right) $$
-                </li>
-                <li>괄호 안의 급수는 첫째 항 \(a = 2/3\), 공비 \(r = 2/3\)인 <strong>기하급수</strong>이다.</li>
-                <li>합공식 \(S = \frac{a}{1-r}\)을 적용하면:
-                    $$ S = \frac{2/3}{1 - 2/3} = \frac{2/3}{1/3} = 2 $$
-                </li>
+            <span class="solution-title">풀이 과정:</span>
+            <ul class="solution-steps">
+                <li>내려갈 때: 1 (처음 낙하)</li>
+                <li>튀어 오르고 내려갈 때: \(2 \times \frac{2}{3}\) (올라갈 때 2/3, 내려갈 때 2/3이므로 2배)</li>
+                <li>두 번째 튀어 오를 때: \(2 \times (\frac{2}{3})^2 = 2 \times \frac{4}{9}\)</li>
+                <li>전체 거리 식: \(1 + 2 \cdot \frac{2}{3} + 2 \cdot \frac{4}{9} + 2 \cdot \frac{8}{27} + \dots\)</li>
+                <li>\(= 1 + 2 (\frac{2}{3} + \frac{4}{9} + \frac{8}{27} + \dots)\)</li>
+                <li>첫 번째 항 1을 제외하고 나머지 항들을 2로 묶어낸다.</li>
+                <li>괄호 안의 급수는 첫째 항 \(a=2/3\), 공비 \(r=2/3\)인 기하 급수이다.</li>
+                <li>합 \(S = \frac{2/3}{1-2/3} = \frac{2/3}{1/3} = 2\).</li>
                 <li>따라서 총 거리는 \(1 + 2(2) = 5\)이다.</li>
             </ul>
         </div>
     </section>
 
-    <section id="repeating-decimal">
-        <h2>2. 순환소수 (Repeating Decimal)</h2>
+    <section id="slide2" class="slide-content">
         <div class="example-box">
-            <span class="example-title">Example: 순환소수를 분수로 바꾸기</span>
-            <p><strong>문제:</strong> 순환소수 \(0.785714285714\dots\)를 분수로 표현하시오.</p>
+            <span class="example-title">Example (Repeating Decimal)</span>
+            <p>순환소수 \(0.785714285714\dots\)를 분수로 바꾸기.</p>
 
-            <span class="step-title">풀이 과정:</span>
-            <ul class="step-list">
-                <li>숫자를 분석하면 \(0.5 + 0.285714285714\dots\)로 나눌 수 있다. (앞의 0.5는 \(1/2\)과 같다)</li>
-                <li>\(0.285714\dots\) 부분은 \(285714\)가 반복되므로, 첫째 항 \(a = 0.285714\), 공비 \(r = 10^{-6}\)인 기하급수이다.</li>
-                <li>무한등비급수 공식 \(S = \frac{a}{1-r}\)을 적용한다:
-                    $$ S = \frac{0.285714}{1 - 10^{-6}} = \frac{0.285714}{0.999999} = \frac{285714}{999999} $$
-                </li>
+            <span class="solution-title">풀이 과정:</span>
+            <ul class="solution-steps">
+                <li>숫자를 분석하면 \(0.5 + 0.285714285714\dots\)로 나눌 수 있다.</li>
+                <li>\(0.285714\dots\) 부분은 \(285714\)가 반복되므로, 첫째 항 \(a=0.285714\), 공비 \(r=10^{-6}\)인 급수이다.</li>
+                <li>공식 \(S = \frac{a}{1-r}\)을 적용한다.</li>
+                <li>\(S = \frac{0.285714}{1-10^{-6}} = \frac{0.285714}{0.999999} = \frac{285714}{999999}\).</li>
                 <li>약분하면 \(\frac{2}{7}\)이 된다.</li>
-                <li>최종 결과:
-                    $$ 0.5 + \frac{2}{7} = \frac{1}{2} + \frac{2}{7} = \frac{11}{14} $$
-                </li>
+                <li>최종 결과: \(0.5 + \frac{2}{7} = \frac{1}{2} + \frac{2}{7} = \frac{11}{14}\).</li>
             </ul>
         </div>
     </section>
 
-    <section id="limits">
-        <h2>3. 극한값 구하기 (Limits)</h2>
-        
+    <section id="slide3" class="slide-content">
         <div class="example-box">
-            <span class="example-title">Example 1: 유리함수의 극한</span>
-            <p><strong>문제:</strong> \(n \to \infty\)일 때 다음 식의 극한을 구하시오.</p>
-            $$ \lim_{n \to \infty} \frac{(2n-1)^4 + 1 + 9n^8}{1 - n^3 - 7n^4} $$
+            <span class="example-title">Example 1</span>
+            <p>\(n \to \infty\)일 때 \(\frac{(2n-1)^4 + 1 + 9n^8}{1 - n^3 - 7n^4}\) 의 극한 구하기.</p>
 
-            <span class="step-title">풀이 과정:</span>
-            <ul class="step-list">
-                <li>분자와 분모의 최고차항을 찾는다. 분자도 \(n^4\) 차수(전개 시), 분모도 \(n^4\) 차수이다.</li>
+            <span class="solution-title">풀이 과정:</span>
+            <ul class="solution-steps">
+                <li>분자와 분모의 최고차항을 찾는다. 분자는 \(n^4\) 차수이고, 분모도 \(n^4\) 차수이다.</li>
                 <li>분모, 분자를 \(n^4\)으로 나눈다.</li>
-                <li><strong>분자:</strong> \((2n-1)^4/n^4 \to 2^4 = 16\). 뒤의항 \((1+9n^8)/n^4\) 부분은 차수 확인 필요 (※ 원본 파일 텍스트 오탈자 가능성 있으나, 파일 내용상 \((1/n^8)+9 \to 9\)로 해석됨. 문맥상 분자가 \(9n^8\)이 아니라 다른 항일 수 있으나 파일 텍스트를 따름: \(1+9n^8/n^4\) 부분에서 \(3\)으로 수렴한다고 기술됨. 파일의 흐름상 \(16+3=19\)가 되도록 설정된 예제)
-                    <br><em>(파일 텍스트 기준: \(16+3-7\), 최종값 \(-19/7\))</em>
-                </li>
-                <li><strong>분모:</strong> \(1/n^4 - 1/n - 7 \to -7\)</li>
-                <li><strong>극한값:</strong> \(\frac{16 + 3}{-7} = -\frac{19}{7}\)</li>
+                <li>분자: \((2n-1)^4/n^4 \to 2^4=16\). \(\quad (1+9n^8/n^4)\) (※ 원본 파일 표기 따름: \((1/n^8)+9 \to 9\) → \(\sqrt{9}=3\)으로 해석되는 문맥으로 보임) \(\to 3\).</li>
+                <li>분모: \(1/n^4 - 1/n - 7 \to -7\).</li>
+                <li>극한값: \(\frac{16+3}{-7} = -\frac{19}{7}\).</li>
             </ul>
         </div>
+    </section>
 
+    <section id="slide4" class="slide-content">
         <div class="example-box">
-            <span class="example-title">Example 2: \(\lim_{n \to \infty} \frac{\ln n}{n}\)</span>
-            <span class="step-title">풀이 과정:</span>
-            <ul class="step-list">
-                <li>\(n\)을 실수 \(x\)로 생각하고 <strong>로피탈의 정리</strong>(분모, 분자를 각각 미분)를 쓴다.</li>
-                <li>\(\ln n\) 미분 \(\to 1/n\), \(n\) 미분 \(\to 1\)</li>
-                <li>$$ \lim_{n \to \infty} \frac{1/n}{1} = 0 $$</li>
+            <span class="example-title">Example 2</span>
+            <p>\(\lim_{n \to \infty} \frac{\ln n}{n}\) 구하기.</p>
+
+            <span class="solution-title">풀이 과정:</span>
+            <ul class="solution-steps">
+                <li>\(n\)을 실수 \(x\)로 생각하고 로피탈의 정리(분모, 분자를 각각 미분)를 쓴다.</li>
+                <li>\(\ln n\) 미분 \(\to 1/n\), \(n\) 미분 \(\to 1\).</li>
+                <li>\(\lim \frac{1/n}{1} = 0\).</li>
             </ul>
         </div>
+    </section>
 
+    <section id="slide5" class="slide-content">
         <div class="example-box">
-            <span class="example-title">Example 3: \(\lim_{n \to \infty} (1/n)^{1/n}\)</span>
-            <span class="step-title">풀이 과정:</span>
-            <ul class="step-list">
-                <li>바로 극한을 구하기 어려우므로 로그를 취한다. \(y = (1/n)^{1/n}\)이라 하면,</li>
-                <li>$$ \ln y = \frac{1}{n} \ln(1/n) = -\frac{\ln n}{n} $$</li>
+            <span class="example-title">Example 3</span>
+            <p>\(\lim_{n \to \infty} (1/n)^{1/n}\) 구하기.</p>
+
+            <span class="solution-title">풀이 과정:</span>
+            <ul class="solution-steps">
+                <li>바로 극한을 구하기 어려우므로 로그를 취한다.</li>
+                <li>\(y = (1/n)^{1/n}\)이라 하면</li>
+                <li>\(\ln y = \frac{1}{n} \ln(1/n) = -\frac{\ln n}{n}\).</li>
                 <li>Example 2에서 \(\frac{\ln n}{n} \to 0\)임을 구했다.</li>
                 <li>따라서 \(\ln y \to 0\)이다.</li>
-                <li>우리가 구하는 값은 \(y\)이므로, \(y = e^0 = 1\)이다.</li>
+                <li>우리가 구하는 값은 \(y\)이므로 \(y = e^0 = 1\)이다.</li>
             </ul>
         </div>
     </section>
 
-    <section id="telescoping">
-        <h2>4. 망원 급수 (Telescoping Series)</h2>
-        
+    <section id="slide6" class="slide-content">
         <div class="example-box">
-            <span class="example-title">Example 2: 부분분수 분해</span>
-            <p><strong>문제:</strong> 다음 급수의 합을 구하시오.</p>
-            $$ \sum_{n=2}^{\infty} \frac{2}{n^2-1} $$
+            <span class="example-title">Example 2 (Telescoping Series)</span>
+            <p>\(\sum_{n=2}^{\infty} \frac{2}{n^2-1}\) 의 합 구하기.</p>
 
-            <span class="step-title">풀이 과정:</span>
-            <ul class="step-list">
-                <li>분모 인수분해: \(2n^2 - 1\)이 아니라 \(n^2-1 = (n-1)(n+1)\)을 이용. (파일 내용: \(\frac{2}{n^2-1}\))</li>
-                <li>부분분수 분해 공식을 쓴다: 
-                    $$ \frac{2}{(n-1)(n+1)} = \frac{1}{n-1} - \frac{1}{n+1} $$
-                </li>
+            <span class="solution-title">풀이 과정:</span>
+            <ul class="solution-steps">
+                <li>\(2n^2-1\)이 아니라 \(n^2-1 = (n-1)(n+1)\)이다.</li>
+                <li>부분분수 분해 공식을 쓴다: \(\frac{1}{n-1} - \frac{1}{n+1}\).</li>
                 <li>\(n=2\)부터 대입하여 나열해 본다.</li>
-                <li>\(n=2: ( \frac{1}{1} - \frac{1}{3} )\)</li>
-                <li>\(n=3: ( \frac{1}{2} - \frac{1}{4} )\)</li>
-                <li>\(n=4: ( \frac{1}{3} - \frac{1}{5} )\) ... 앞의 \(-1/3\)과 뒤의 \(1/3\)이 지워진다.</li>
-                <li>이런 식으로 계속 지워지면(telescoping), 맨 앞의 \(1\)과 \(1/2\)만 남고 뒤쪽 항들은 사라진다.</li>
-                <li>$$ S = 1 + \frac{1}{2} = \frac{3}{2} $$</li>
+                <li>\(n=2: (\frac{1}{1} - \frac{1}{3})\)</li>
+                <li>\(n=3: (\frac{1}{2} - \frac{1}{4})\)</li>
+                <li>\(n=4: (\frac{1}{3} - \frac{1}{5})\) ... 앞의 \(-1/3\)과 뒤의 \(1/3\)이 지워진다.</li>
+                <li>이런 식으로 계속 지워지면(telescoping), 맨 앞의 1과 1/2만 남고 뒤쪽 항들은 사라지거나 0으로 수렴한다.</li>
+                <li>\(S = 1 + \frac{1}{2} = \frac{3}{2}\).</li>
             </ul>
         </div>
+    </section>
 
+    <section id="slide7" class="slide-content">
         <div class="example-box">
-            <span class="example-title">Example 3: 로그 급수의 발산</span>
-            <p><strong>문제:</strong> \(\sum \ln(\frac{n}{n+1})\) 조사하기</p>
-            
-            <span class="step-title">풀이 과정:</span>
-            <ul class="step-list">
-                <li>로그 성질을 이용해 식을 변형한다:
-                    $$ \ln\left(\frac{n}{n+1}\right) = \ln n - \ln(n+1) $$
-                </li>
-                <li>부분합 \(S_n\)을 나열해 본다:
-                    $$ S_n = (\ln 1 - \ln 2) + (\ln 2 - \ln 3) + \dots + (\ln n - \ln(n+1)) $$
-                </li>
-                <li>가운데 항들이 다 지워지고(telescoping), 처음의 \(\ln 1\)과 마지막의 \(-\ln(n+1)\)만 남는다.</li>
-                <li>\(\ln 1 = 0\)이므로, \(S_n = -\ln(n+1)\)</li>
-                <li>\(n \to \infty\) 일 때 \(-\ln(n+1) \to -\infty\) 이므로 이 급수는 <strong>발산</strong>한다.</li>
+            <span class="example-title">Example 3</span>
+            <p>\(\sum \ln(\frac{n}{n+1})\) 조사하기.</p>
+
+            <span class="solution-title">풀이 과정:</span>
+            <ul class="solution-steps">
+                <li>로그 성질을 이용해 분해한다: \(\ln n - \ln(n+1)\). (분의 1 꼴이 아니다)</li>
+                <li>부분합 \(S_n = (\ln 1 - \ln 2) + (\ln 2 - \ln 3) + \dots + (\ln n - \ln(n+1))\).</li>
+                <li>가운데 항들이 다 지워지고 \(\ln 1 - \ln(n+1) = -\ln(n+1)\)만 남는다.</li>
+                <li>\(n \to \infty\) 일 때 \(-\ln(n+1) \to -\infty\) 이므로 이 급수는 발산한다.</li>
             </ul>
         </div>
     </section>
@@ -332,3 +327,5 @@
 
 </body>
 </html>
+
+```
