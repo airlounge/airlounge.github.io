@@ -1,0 +1,347 @@
+제공해주신 HTML 내용을 **학부 2학년 전공 교재**의 품격에 맞게 깔끔하고 전문적인 스타일로 다듬었습니다.
+
+**주요 개선 사항:**
+
+1. **MathJax 도입:** 기존의 ASCII 텍스트(`( 1 5 -2 )`)로 표현된 행렬과 수식을 아름다운 LaTeX 수식으로 변환하여 가독성을 높였습니다.
+2. **시각 자료 요청 태그:** 벡터, 평면, 고유값 등 기하학적 직관이 필요한 부분에 적절한 **이미지 태그**를 삽입했습니다.
+3. **디자인 구조화:**
+* **이론(Theory):** 깔끔한 본문 텍스트
+* **예제(Example):** 파란색 박스로 강조
+* **대기과학 응용(Application):** 초록색 박스로 구분하여 "수학"과 "전공 적용"을 명확히 분리했습니다.
+
+
+
+아래 코드를 복사하여 HTML 파일로 저장해 보세요.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>선형대수와 대기과학 – 학부 2학년용 교재</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --primary-color: #003366; /* Atmospheric Navy */
+      --secondary-color: #4a90e2; /* Sky Blue */
+      --text-color: #333;
+      --bg-color: #f4f7f9;
+      --card-bg: #ffffff;
+      --example-bg: #ebf5fb;
+      --example-border: #3498db;
+      --app-bg: #e9f7ef; /* Application Box Background */
+      --app-border: #27ae60; /* Application Box Border */
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.8;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: var(--card-bg);
+      padding: 60px;
+      border-radius: 12px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 2.2rem;
+      color: var(--primary-color);
+      border-bottom: 3px solid var(--secondary-color);
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      color: var(--primary-color);
+      margin-top: 50px;
+      margin-bottom: 20px;
+      border-left: 6px solid var(--secondary-color);
+      padding-left: 15px;
+      font-weight: 600;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      color: #444;
+      margin-top: 35px;
+      font-weight: 600;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+      display: inline-block;
+    }
+
+    p, li {
+      margin-bottom: 12px;
+      word-break: keep-all;
+    }
+
+    /* Citation Style */
+    .citation {
+      font-size: 0.8rem;
+      color: #7f8c8d;
+      vertical-align: super;
+    }
+
+    /* Box Styles */
+    .box {
+      border-radius: 8px;
+      padding: 20px 25px;
+      margin: 25px 0;
+    }
+
+    .example-box {
+      background-color: var(--example-bg);
+      border-left: 5px solid var(--example-border);
+    }
+
+    .app-box {
+      background-color: var(--app-bg);
+      border-left: 5px solid var(--app-border);
+    }
+
+    .box-title {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    
+    .example-box .box-title { color: var(--example-border); }
+    .app-box .box-title { color: var(--app-border); }
+
+    /* MathJax Styling override */
+    .MathJax {
+      font-size: 1.05em !important;
+      color: #2c3e50;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #ddd;
+      margin: 40px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1>선형대수와 대기과학</h1>
+  <p>
+    이 글은 <b>Boas 3장(Linear Algebra)</b>을 바탕으로, 대기과학과 학부 2학년 수준 수업교재 형태로 재구성한 초안입니다.<span class="citation">[3]</span>
+    행렬·벡터의 기본 개념은 유지하되, 약 30% 정도를 대기과학 예제로 채워 넣었습니다.
+  </p>
+
+  <hr>
+
+  <h2>1. 선형대수와 대기과학</h2>
+  <p>
+    선형대수는 "연립 1차 방정식 + 기하학(벡터, 평면, 공간)"을 다루는 도구입니다.<span class="citation">[3]</span> 대기과학에서는 다음과 같은 상황에서 필수적으로 등장합니다.
+  </p>
+  <ul>
+    <li>여러 층(Layer)에서의 풍속, 온도, 압력을 행렬·벡터로 표현하고 해를 구할 때 (예: 정역학 방정식의 이산화).</li>
+    <li>자료동화(Data Assimilation)에서 관측과 모델 연산을 선형 연산자(행렬)로 나타낼 때.</li>
+    <li>Rossby 파나 중력파 분석에서 고유값(주파수)과 고유벡터(정규모드)를 구할 때.<span class="citation">[3]</span></li>
+  </ul>
+
+  <hr>
+
+  <h2>2. 행렬과 행 소거: 연립 방정식 해법</h2>
+  
+  <h3>2.1 행렬, 전치, 계수행렬</h3>
+  <p>
+    행렬은 숫자를 직사각형 배열로 모아 놓은 것입니다. 예를 들어 2×3 행렬 \(A\)는 다음과 같습니다.
+  </p>
+  \[ A = \begin{pmatrix} 1 & 5 & -2 \\ -3 & 0 & 6 \end{pmatrix} \]
+  <p>
+    전치행렬(Transpose) \(A^T\)는 행과 열을 맞바꾼 것입니다.
+  </p>
+  \[ A^T = \begin{pmatrix} 1 & -3 \\ 5 & 0 \\ -2 & 6 \end{pmatrix} \]
+  
+  <p>연립방정식을 행렬 방정식 \(Mr = k\) 꼴로 표현할 수 있습니다.</p>
+  \[
+  \begin{cases}
+    2x - z = 2 \\
+    6x + 5y + 3z = 7 \\
+    2x - y = 4
+  \end{cases}
+  \quad \Rightarrow \quad
+  \underbrace{\begin{pmatrix} 2 & 0 & -1 \\ 6 & 5 & 3 \\ 2 & -1 & 0 \end{pmatrix}}_{M}
+  \underbrace{\begin{pmatrix} x \\ y \\ z \end{pmatrix}}_{r}
+  =
+  \underbrace{\begin{pmatrix} 2 \\ 7 \\ 4 \end{pmatrix}}_{k}
+  \]
+  
+  <h3>2.2 가우스 소거의 원리</h3>
+  <p>가우스 소거법(Gaussian Elimination)은 행 기본 변환을 통해 연립방정식의 해를 구하는 알고리즘입니다.</p>
+
+  <div class="example-box">
+    <span class="box-title">예제 1: 3×3 연립식의 해 구하기</span>
+    <p>증강행렬(Augmented Matrix)로 시작합니다.</p>
+    \[ \left( \begin{array}{ccc|c} 2 & 0 & -1 & 2 \\ 6 & 5 & 3 & 7 \\ 2 & -1 & 0 & 4 \end{array} \right) \]
+    <p><b>Step 1:</b> 1행을 이용해 아래 행들의 \(x\)를 소거합니다. (2행 - 3×1행, 3행 - 1행)</p>
+    \[ \rightarrow \left( \begin{array}{ccc|c} 2 & 0 & -1 & 2 \\ 0 & 5 & 6 & 1 \\ 0 & -1 & 1 & 2 \end{array} \right) \]
+    <p><b>Step 2 & 3:</b> 행 교환 및 소거 과정을 거쳐 역대입(Back-substitution)을 하면 해는 \((x, y, z) = (3/2, -1, 1)\)이 됩니다.</p>
+  </div>
+
+  <h3>2.3 랭크와 대기과학 응용</h3>
+  <div class="app-box">
+    <span class="box-title">☁️ 대기과학 예제 1: 세 층 온도 보정</span>
+    <p>
+      세 고도 \(z_1, z_2, z_3\)에서 관측한 온도 \(T^{obs}\)가 있고, 수치 모델이 이들 간의 선형 관계(보정식)를 가정한다고 합시다.
+    </p>
+    \[
+    \begin{pmatrix} 1 & a & b \\ c & 1 & d \\ e & f & 1 \end{pmatrix}
+    \begin{pmatrix} T_1 \\ T_2 \\ T_3 \end{pmatrix}
+    =
+    \begin{pmatrix} T_1^{obs} \\ T_2^{obs} \\ T_3^{obs} \end{pmatrix}
+    \]
+    <p>
+      계수 \(a, \dots, f\)가 주어졌을 때, 가우스 소거법을 통해 각 층의 보정된 온도 \(T_i\)를 구할 수 있습니다. 실제 수치예보 모델(NWP)의 3D-Var 같은 자료동화 과정은 이보다 훨씬 거대한 차원의 행렬 연산을 수행합니다.
+    </p>
+  </div>
+
+  <hr>
+
+  <h2>3. 행렬식(Determinant)과 Cramer 공식</h2>
+  
+  <h3>3.1 행렬식 계산</h3>
+  <p>\(2 \times 2\) 행렬의 행렬식은 \(\det A = ad - bc\)입니다.</p>
+
+  <div class="example-box">
+    <span class="box-title">예제 2: 3×3 행렬식 전개</span>
+    \[
+    \begin{vmatrix} 1 & -5 & 2 \\ 7 & 3 & 4 \\ 2 & 1 & 5 \end{vmatrix}
+    = 2 \begin{vmatrix} 7 & 3 \\ 2 & 1 \end{vmatrix} - 4 \begin{vmatrix} 1 & -5 \\ 2 & 1 \end{vmatrix} + 5 \begin{vmatrix} 1 & -5 \\ 7 & 3 \end{vmatrix}
+    \]
+    \[ = 2(1) - 4(11) + 5(38) = 148 \]
+  </div>
+
+  <div class="app-box">
+    <span class="box-title">☁️ 대기과학 예제 2: 2층 정역학 근사</span>
+    <p>
+      간단한 2층 대기 모델에서 상하층 기압 차(\(\Delta p\))와 온도(\(T\))가 선형 관계라고 가정합시다.
+    </p>
+    \[
+    \begin{cases} \alpha T_1 + \beta T_2 = \Delta p_1 \\ \gamma T_1 + \delta T_2 = \Delta p_2 \end{cases}
+    \]
+    <p>
+      Cramer 공식을 이용하면 \(T_1, T_2\)를 해석적으로 구할 수 있습니다. 만약 계수행렬식 \(D \approx 0\)이라면, 작은 기압 관측 오차가 거대한 온도 오차를 유발하는 <b>불안정한(Ill-conditioned)</b> 시스템임을 의미합니다.
+    </p>
+  </div>
+
+  <hr>
+
+  <h2>4. 벡터, 내적, 외적과 기하</h2>
+  
+  
+
+  <h3>4.1~4.2 벡터의 내적 (Dot Product)</h3>
+  <p>내적은 두 벡터 사이의 각도를 구하는 데 유용합니다.</p>
+  \[ \mathbf{A} \cdot \mathbf{B} = |\mathbf{A}||\mathbf{B}|\cos\theta \]
+
+  <div class="app-box">
+    <span class="box-title">☁️ 대기과학 예제 3: 두 풍향 벡터의 각도</span>
+    <p>두 지점의 바람 벡터가 \(\mathbf{u}_1 = (5, 5)\) m/s, \(\mathbf{u}_2 = (-5, 5)\) m/s라고 합시다.</p>
+    \[ \mathbf{u}_1 \cdot \mathbf{u}_2 = 5(-5) + 5(5) = 0 \quad \Rightarrow \quad \cos\theta = 0 \quad \Rightarrow \quad \theta = 90^\circ \]
+    <p>두 바람은 서로 직교합니다. 내적을 통해 풍장의 수렴/발산 패턴을 정량화할 수 있습니다.</p>
+  </div>
+
+  <h3>4.3 외적 (Cross Product)과 법선벡터</h3>
+  
+  
+
+[Image of right hand rule cross product]
+
+  
+  <p>외적 \(\mathbf{A} \times \mathbf{B}\)는 두 벡터가 만드는 평면에 <b>수직인 벡터(법선벡터)</b>를 만듭니다.</p>
+
+  <div class="app-box">
+    <span class="box-title">☁️ 대기과학 예제 4: 온도 경도면 분석</span>
+    <p>
+      대기 중 세 관측소의 위치와 온도를 3차원 좌표 \((x, y, T)\)로 나타낼 때, 이 세 점을 지나는 평면의 법선벡터 \(\mathbf{n} = \mathbf{a} \times \mathbf{b}\)를 구하면 <b>"온도 경도(Gradient)"의 방향</b>을 알 수 있습니다.
+    </p>
+  </div>
+
+  <hr>
+
+  <h2>5. 직선과 평면, 거리</h2>
+
+  
+
+  <h3>5.3 점–평면 거리</h3>
+  <p>점 \(P(x_0, y_0, z_0)\)와 평면 \(ax + by + cz + d = 0\) 사이의 거리는 다음과 같습니다.</p>
+  \[ D = \frac{|ax_0 + by_0 + cz_0 + d|}{\sqrt{a^2 + b^2 + c^2}} \]
+
+  <div class="app-box">
+    <span class="box-title">☁️ 대기과학 예제 5: 전선면과의 거리</span>
+    <p>
+      기압좌표계 \((x, y, p)\)에서 전선면(Frontal surface)을 평면 방정식으로 근사했다고 합시다. 특정 관측 지점이 이 전선면으로부터 수직으로 얼마나 떨어져 있는지를 위 거리 공식을 통해 계산하여, 전선의 영향권 여부를 판단할 수 있습니다.
+    </p>
+  </div>
+
+  <hr>
+
+  <h2>6. 고유값, 고유벡터: 대기의 진동 모드</h2>
+  
+  
+
+  <h3>6.1 고유값 문제의 정의</h3>
+  <p>행렬 \(M\)이 벡터 \(\mathbf{r}\)에 작용할 때, 방향은 변하지 않고 크기만 \(\lambda\)배 되는 경우를 말합니다.</p>
+  \[ M\mathbf{r} = \lambda \mathbf{r} \]
+  <ul>
+    <li>\(\lambda\): 고유값 (Eigenvalue)</li>
+    <li>\(\mathbf{r}\): 고유벡터 (Eigenvector)</li>
+  </ul>
+
+  <h3>6.3 대각화의 의미</h3>
+  <p>
+    고유벡터들을 좌표축으로 삼으면(좌표변환), 복잡한 연산이 각 축 방향으로의 단순한 확대/축소(대각행렬)로 분리됩니다.
+  </p>
+
+  <div class="app-box">
+    <span class="box-title">☁️ 대기과학 예제 6: 2층 중력파 모드</span>
+    <p>
+      단순화된 2층 중력파 모델의 진화식이 다음 행렬식과 같다고 합시다.
+    </p>
+    \[
+    \begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix} \begin{pmatrix} \eta_1 \\ \eta_2 \end{pmatrix} = \lambda \begin{pmatrix} \eta_1 \\ \eta_2 \end{pmatrix}
+    \]
+    <p>이를 풀면 두 가지 고유모드가 나옵니다.</p>
+    <ul>
+      <li><b>\(\lambda_1 = 1, \mathbf{v}_1 = (1, 1)\):</b> 두 층이 같이 움직이는 순압(Barotropic) 모드</li>
+      <li><b>\(\lambda_2 = 3, \mathbf{v}_2 = (1, -1)\):</b> 두 층이 반대로 움직이는 경압(Baroclinic) 모드</li>
+    </ul>
+    
+    
+    
+    <p>
+      행렬의 고유분해(Eigendecomposition)는 대기의 복잡한 움직임을 독립적인 물리적 모드(파동)들로 분리해 줍니다.
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>
+
+```
