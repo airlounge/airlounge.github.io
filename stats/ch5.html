@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>선형대수와 대기과학 – 학부 2학년용 교재</title>
+</head>
+<body>
+
+<h1>선형대수와 대기과학</h1>
+
+<p>
+이 글은 Boas 3장(Linear Algebra)을 바탕으로, 대기과학과 학부 2학년 수준 수업교재 형태로 재구성한 초안이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+행렬·벡터의 기본 개념은 유지하되, 약 30% 정도를 대기과학 예제로 채워 넣었다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<hr>
+
+<h2>1. 선형대수와 대기과학</h2>
+
+<p>
+선형대수는 “연립 1차 방정식 + 기하학(벡터, 평면, 공간)”을 다루는 도구이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+대기과학에서는 다음과 같은 곳에서 반드시 등장한다.
+</p>
+
+<ul>
+  <li>여러 층에서의 풍속, 온도, 압력을 행렬·벡터로 표현하고, 연립방정식으로 해를 구할 때 (예: 정역학 방정식 이산화).<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+  <li>자료동화에서 관측–모델 연산을 선형 연산자(행렬)로 나타낼 때.</li>
+  <li>Rossby 파나 중력파에서 고유값(고유주파수)·고유벡터(정규모드)를 구할 때.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</ul>
+
+<p>
+이 장에서는 네 가지를 목표로 한다.
+</p>
+
+<ol>
+  <li>행렬과 가우스 소거(행 기본변환)로 연립방정식을 푸는 법.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+  <li>행렬식과 Cramer 공식, 랭크 개념.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+  <li>벡터와 직선·평면, 거리 계산.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+  <li>고유값·고유벡터와 대각화, 그리고 “좋은 좌표계” 선택.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</ol>
+
+<p>
+각 절마다 간단한 대기과학 예제를 포함한다.
+</p>
+
+<hr>
+
+<h2>2. 행렬과 행 소거: 연립 방정식 해법</h2>
+
+<h3>2.1 행렬, 전치, 계수행렬</h3>
+
+<p>
+행렬은 숫자를 직사각형 배열로 모아 놓은 것이다.<span></span><br> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+예를 들어,
+</p>
+
+<pre>
+A =
+(  1   5  -2
+  -3   0   6 )
+</pre>
+
+<p>
+같은 2×3 행렬에서, A<sub>ij</sub>는 i번째 행, j번째 열의 원소이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p>
+전치행렬은 행과 열을 맞바꾼 것이라서,
+</p>
+
+<pre>
+Aᵀ =
+(  1  -3
+   5   0
+  -2   6 )
+</pre>
+
+<p>
+가 된다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p>
+연립방정식
+</p>
+
+<pre>
+2x - z = 2
+6x + 5y + 3z = 7
+2x - y = 4
+</pre>
+
+<p>
+의 계수행렬, 미지수벡터, 상수벡터는
+</p>
+
+<pre>
+M = ( 2   0  -1
+      6   5   3
+      2  -1   0 )
+
+r = ( x
+      y
+      z )
+
+k = ( 2
+      7
+      4 )
+</pre>
+
+<p>
+이고, 식 전체는 M r = k 로 쓸 수 있다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p>
+증강행렬은 우변까지 한 번에 모아 쓴 것이라서
+</p>
+
+<pre>
+A = ( 2   0  -1 | 2
+      6   5   3 | 7
+      2  -1   0 | 4 )
+</pre>
+
+<p>
+와 같이 쓴다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<h3>2.2 가우스 소거의 원리</h3>
+
+<p>
+허용되는 행 연산(행 기본변환)은 세 가지이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<ol>
+  <li>두 행 교환</li>
+  <li>행에 0이 아닌 상수 곱하기 (또는 나누기)</li>
+  <li>한 행에 다른 행의 상수배를 더하기 (또는 빼기)</li>
+</ol>
+
+<p>
+이 연산들은 원래 연립방정식과 동치인 새로운 연립방정식을 만들어 준다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p><b>예제 1 (3×3 연립식의 해)</b></p>
+
+<pre>
+2x - z = 2
+6x + 5y + 3z = 7
+2x - y = 4
+</pre>
+
+<p>
+증강행렬로 시작한다.
+</p>
+
+<pre>
+( 2   0  -1 | 2
+  6   5   3 | 7
+  2  -1   0 | 4 )
+</pre>
+
+<p>
+1단계: 1행을 이용해 아래 행들의 x 제거.<span></span><br> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+2행 ← 2행 − 3×1행, 3행 ← 3행 − 1×1행
+</p>
+
+<pre>
+→ ( 2   0  -1 | 2
+    0   5   6 | 1
+    0  -1   1 | 2 )
+</pre>
+
+<p>
+2단계: 2행–3행 교환.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<pre>
+( 2   0  -1 | 2
+  0  -1   1 | 2
+  0   5   6 | 1 )
+</pre>
+
+<p>
+3단계: 2행으로 3행의 y 없애기.<span></span><br> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+3행 ← 3행 + 5×2행
+</p>
+
+<pre>
+( 2   0  -1 | 2
+  0  -1   1 | 2
+  0   0  11 | 11 )
+</pre>
+
+<p>
+4단계: 뒤에서부터 해 구하기.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<ul>
+  <li>3행: 11z = 11 → z = 1</li>
+  <li>2행: −y + z = 2 → −y + 1 = 2 → y = −1</li>
+  <li>1행: 2x − z = 2 → 2x − 1 = 2 → x = 3/2</li>
+</ul>
+
+<p>
+따라서 해는 (x,y,z) = (3/2, −1, 1) 이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<h3>2.3 랭크와 해의 개수</h3>
+
+<p>
+행 소거 후 “0 = 비0” 꼴 행이 나오면 모순이므로 해가 없다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p>
+행렬의 랭크(rank)는 행 소거 후 남는 “0이 아닌 행”의 개수이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p>
+M: 계수행렬, A: 증강행렬일 때:<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<ul>
+  <li>rank M &lt; rank A → 해 없음.</li>
+  <li>rank M = rank A = 미지수 개수 n → 유일해.</li>
+  <li>rank M = rank A = R &lt; n → 자유도 (n−R)만큼 무한히 많은 해.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</ul>
+
+<p><b>대기과학 예제 1 (세 층 온도 보정)</b></p>
+
+<p>
+세 고도 z<sub>1</sub>, z<sub>2</sub>, z<sub>3</sub>에서 관측한 온도 T<sup>obs</sup><sub>i</sub>가 있고, 분석 시스템이 선형 보정식
+</p>
+
+<pre>
+T₁ + aT₂ + bT₃ = T₁ᵒᵇˢ
+cT₁ + T₂ + dT₃ = T₂ᵒᵇˢ
+eT₁ + fT₂ + T₃ = T₃ᵒᵇˢ
+</pre>
+
+<p>
+을 통해 내부 일관성을 맞추려고 한다고 하자. 계수 a,…,f가 주어져 있으면 위 연립방정식을 행렬로 놓고 가우스 소거로 T₁,T₂,T₃을 구할 수 있다. 실제 NWP 자료동화에서는 이보다 큰 차원의 선형 시스템을 수치선형대수로 푼다.
+</p>
+
+<hr>
+
+<h2>3. 행렬식(Determinant)과 Cramer 공식</h2>
+
+<h3>3.1 2×2, 3×3 행렬식</h3>
+
+<p>
+2×2 행렬
+</p>
+
+<pre>
+A = ( a  b
+      c  d )
+</pre>
+
+<p>
+의 행렬식은 det A = ad − bc 이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p><b>예제 2 (3×3 행렬식 계산)</b></p>
+
+<pre>
+det
+( 1  -5   2
+  7   3   4
+  2   1   5 )
+</pre>
+
+<p>
+세 번째 열로 전개하면,
+</p>
+
+<pre>
+2 | 7  3 |
+  | 2  1 |  - 4 | 1  -5 |
+                    | 2   1 |  + 5 | 1  -5 |
+                                      | 7   3 |
+
+= 2(7-6) - 4(1+10) + 5(3+35) = 148
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<h3>3.2 유용한 성질</h3>
+
+<ul>
+  <li>한 행(또는 열)에 k를 곱하면 det 전체도 k배가 된다.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+  <li>한 행이 전부 0이거나, 두 행이 같거나, 두 행이 서로 배수이면 det = 0 이다.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+  <li>두 행 교환 → det 부호가 바뀐다.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+  <li>한 행에 다른 행의 상수배를 더해도 det는 변하지 않는다.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</ul>
+
+<h3>3.3 Cramer 공식</h3>
+
+<p>
+2×2 연립
+</p>
+
+<pre>
+a₁x + b₁y = c₁
+a₂x + b₂y = c₂
+</pre>
+
+<p>
+에서 계수 행렬식
+</p>
+
+<pre>
+D = | a₁  b₁ |
+    | a₂  b₂ |
+</pre>
+
+<p>
+가 0이 아니면,<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<pre>
+x = | c₁  b₁ | / D,   y = | a₁  c₁ | / D
+    | c₂  b₂ |           | a₂  c₂ |
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<p><b>예제 3 (간단한 2×2 문제)</b></p>
+
+<pre>
+2x + 3y = 3
+x - 2y = 5
+</pre>
+
+<p>
+D = | 2  3 | = -7 이고,
+</p>
+
+<pre>
+x = | 3  3 | / -7 = ( -6 - 15 ) / -7 = 3
+    | 5 -2 |
+
+y = | 2  3 | / -7 = ( 10 - 3 ) / -7 = -1
+    | 1  5 |
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<p><b>대기과학 예제 2 (2층 정역학 근사)</b></p>
+
+<p>
+간단한 2층 대기 모델에서, 상하층 기압 차와 온도 차가 선형 관계라고 가정하자.
+</p>
+
+<pre>
+αT₁ + βT₂ = Δp₁
+γT₁ + δT₂ = Δp₂
+</pre>
+
+<p>
+Δp₁, Δp₂가 관측된 층별 기압차라면, Cramer 공식을 이용해 T₁,T₂를 정확히 구할 수 있다. 계수행렬식이 0에 가깝다면, 작은 관측 오차가 큰 온도 오차로 증폭될 수 있으므로 수치적으로 불안정한 시스템임을 의미한다.
+</p>
+
+<hr>
+
+<h2>4. 벡터, 내적, 외적과 기하</h2>
+
+<h3>4.1 벡터와 크기</h3>
+
+<p>
+벡터 A의 크기(노름)는
+</p>
+
+<pre>
+|A| = √(Aₓ² + Aᵧ²)    (2차원)
+|A| = √(Aₓ² + Aᵧ² + A_z²)  (3차원)
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<p><b>예제 4 (힘의 크기)</b></p>
+
+<p>
+F = 4i + 3j lb 이면,
+</p>
+
+<pre>
+|F| = √(4² + 3²) = 5 lb
+θ = arctan(3/4)
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<h3>4.2 내적과 각도</h3>
+
+<p>
+내적 정의:
+</p>
+
+<pre>
+A·B = |A||B|cosθ = AₓBₓ + AᵧBᵧ + A_zB_z
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<p>
+따라서,
+</p>
+
+<pre>
+cosθ = (A·B) / (|A||B|)
+</pre>
+
+<p><b>예제 5 (벡터 사이 각도)</b></p>
+
+<pre>
+A = (3, 6, 9), B = (-2, 3, 1)
+A·B = 3(-2)+6·3+9·1 = 21
+|A| = 3√14, |B| = √14
+→ cosθ = 21/(3·14) = 1/2 → θ = 60°
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<p><b>대기과학 예제 3 (두 풍향 벡터의 각도)</b></p>
+
+<pre>
+u₁ = (5, 5) m/s
+u₂ = (-5, 5) m/s
+
+u₁·u₂ = 5(-5)+5·5 = 0 → θ = 90°
+</pre>
+
+<p>
+두 지점 풍향은 서로 직교한다. 이렇게 풍장의 수렴/발산 구조를 내적으로 정량화하면, 수평 수렴 영역과 바람 방향 차이를 쉽게 파악할 수 있다.
+</p>
+
+<h3>4.3 외적과 면적, 법선벡터</h3>
+
+<p>
+외적은
+</p>
+
+<pre>
+A×B = |  i    j    k  |
+       | Aₓ  Aᵧ  A_z |
+       | Bₓ  Bᵧ  B_z |
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<p>
+크기는 |A×B| = |A||B|sinθ 이다.<span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)</span>
+</p>
+
+<ul>
+  <li>두 벡터가 만드는 평행사변형의 넓이 = |A×B|.</li>
+  <li>A×B는 두 벡터에 모두 수직인 법선벡터이다.</li>
+</ul>
+
+<p><b>예제 6 (두 벡터에 수직인 벡터)</b></p>
+
+<pre>
+A = (2, 1, -1), B = (1, 3, -2)
+
+A×B = (1, 3, 5)
+</pre>
+
+<p>
+(1,3,5)는 A와 B 모두에 수직인 벡터이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p><b>대기과학 예제 4 (층간 기울기의 법선벡터)</b></p>
+
+<p>
+연직 단면 상에서 온도장 T(x,z)를 근사하기 위해 두 점
+</p>
+
+<pre>
+r₁ = (x₁, z₁, T₁), r₂ = (x₂, z₂, T₂)
+</pre>
+
+<p>
+를 3차원 공간 좌표로 본다면, 둘과 (0,0,0)이 이루는 평면은 “온도 기울기 방향”을 포함한다. a = r₁, b = r₂라 두고 n = a×b를 계산하면 평면의 법선벡터를 얻고, 이로부터 평면 방정식과 (x,z)에 대한 선형 근사가 가능하다. 이는 실제로는 다차원 회귀로 구현되지만, 기하학적 구조는 같다.
+</p>
+
+<hr>
+
+<h2>5. 직선과 평면, 거리</h2>
+
+<h3>5.1 직선의 벡터·매개변수식</h3>
+
+<p>
+3차원에서, 점 (x₀,y₀,z₀)를 지나고 방향벡터 A=(a,b,c)와 평행한 직선은
+</p>
+
+<pre>
+r(t) = r₀ + tA = (x₀,y₀,z₀) + t(a,b,c)
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<p>
+성분으로는
+</p>
+
+<pre>
+x = x₀ + at,  y = y₀ + bt,  z = z₀ + ct
+</pre>
+
+<p>
+대칭형으로 쓰면
+</p>
+
+<pre>
+(x - x₀)/a = (y - y₀)/b = (z - z₀)/c
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<h3>5.2 평면의 방정식</h3>
+
+<p>
+법선벡터 N=(a,b,c)와 한 점 (x₀,y₀,z₀)가 주어지면 평면 방정식은
+</p>
+
+<pre>
+a(x - x₀) + b(y - y₀) + c(z - z₀) = 0
+</pre>
+
+<p>
+또는
+</p>
+
+<pre>
+ax + by + cz = d,  d = ax₀ + by₀ + cz₀
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<p><b>예제 7 (세 점이 정하는 평면)</b></p>
+
+<p>
+점 A(-1,1,1), B(2,3,0), C(0,1,-2)를 지나는 평면을 구한다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<ol>
+  <li>AB, AC 벡터:
+    <pre>
+AB = (3, 2, -1),  AC = (1, 0, -3)
+    </pre>
+  </li>
+  <li>법선벡터:
+    <pre>
+N = AB×AC = (-6, 8, -2)
+    </pre>
+  </li>
+  <li>B를 대입:
+    <pre>
+-6(x - 2)+8(y - 3)-2z=0 → 3x - 4y + z + 6 = 0
+    </pre>
+  </li>
+</ol>
+
+<h3>5.3 점–평면 거리</h3>
+
+<p>
+점 P(x₀,y₀,z₀)와 평면 ax + by + cz + d = 0 사이의 거리는
+</p>
+
+<pre>
+D = |ax₀ + by₀ + cz₀ + d| / √(a² + b² + c²)
+</pre>
+
+<p>
+이다.
+</p>
+
+<p><b>예제 8 (점에서 평면까지 거리)</b></p>
+
+<p>
+P(1,-2,3)와 평면 3x - 2y + z + 1 = 0 사이의 거리:<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<pre>
+D = |3·1 -2(-2) + 3 + 1| / √(3² + (-2)² + 1²)
+  = 11 / √14
+</pre>
+
+<p><b>대기과학 예제 5 (기압면에서 특정 점까지 거리)</b></p>
+
+<p>
+기압좌표계(p, x, y)에서 어떤 연직면(예: 전선면)을 평면 방정식
+</p>
+
+<pre>
+ap + bx + cy + d = 0
+</pre>
+
+<p>
+로 근사했다면, 특정 지점(p₀,x₀,y₀)이 그 면으로부터 얼마나 떨어져 있는지는 위 거리 공식을 그대로 적용해 계산할 수 있다. 이 거리는 전선면에서의 수직 거리로 해석되어, 전선 구조 분석에 쓰일 수 있다.
+</p>
+
+<hr>
+
+<h2>6. 고유값, 고유벡터, 대각화와 모드</h2>
+
+<h3>6.1 정의</h3>
+
+<p>
+선형변환 M에 대해, 0이 아닌 벡터 r과 상수 λ가
+</p>
+
+<pre>
+Mr = λr
+</pre>
+
+<p>
+을 만족하면 λ는 고유값, r은 고유벡터이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p>
+고유값은 특성방정식
+</p>
+
+<pre>
+det(M - λI) = 0
+</pre>
+
+<p>
+의 해이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<h3>6.2 예제와 대각화</h3>
+
+<p><b>예제 9 (2×2 고유값 문제)</b></p>
+
+<pre>
+M = ( 5  -2
+     -2   2 )
+</pre>
+
+<p>
+특성방정식:
+</p>
+
+<pre>
+det( 5-λ  -2
+     -2  2-λ ) = (5-λ)(2-λ) - 4 = λ² - 7λ + 6 = 0
+
+→ λ = 1, 6
+</pre>
+
+<p>
+λ=1일 때:
+</p>
+
+<pre>
+(5-1)x - 2y = 0 → 2x - y = 0 → y = 2x
+</pre>
+
+<p>
+λ=6일 때:
+</p>
+
+<pre>
+(5-6)x - 2y = 0 → -x - 2y = 0 → y = -½x
+</pre>
+
+<p><span></span></p> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+
+<h3>6.3 대각화와 좌표계 선택</h3>
+
+<p>
+적당한 C를 골라
+</p>
+
+<pre>
+C⁻¹MC = D
+</pre>
+
+<p>
+가 되게 할 수 있으면, D는 대각행렬이다.<span></span> 이때 C의 열벡터는 M의 단위 고유벡터들이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<p>
+의미는 다음과 같다.
+</p>
+
+<ul>
+  <li>원래 좌표계(x,y)에서는 변환이 섞여서 나타난다.</li>
+  <li>고유벡터 방향을 축으로 삼는 좌표계(x′,y′)에서는 변환이 각 축 방향으로 배율 λ만 곱하는 꼴이 된다.<span></span></li> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</ul>
+
+<h3>6.4 대기과학 예제 6 (2층 중력파 모드)</h3>
+
+<p>
+아주 단순화한 2층 중력파 toy 모델에서, 층별 변위 η₁, η₂의 선형 진화식이
+</p>
+
+<pre>
+d²/dt² [ η₁ ] = -Ω² ( 2  -1 )[ η₁ ]
+        [ η₂ ]        [ -1  2 ] [ η₂ ]
+</pre>
+
+<p>
+라고 하자.<span></span> 이는 고유값 문제 [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<pre>
+( 2  -1 )[ v ] = λ [ v ]
+( -1  2 )      [   ]
+</pre>
+
+<p>
+와 같다. 이를 풀면 λ₁=1, λ₂=3이고, 고유벡터는 각각 (1,1), (1,-1)이다(Boas의 예제와 동일 구조).<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+</p>
+
+<ul>
+  <li>(1,1): 두 층이 같은 위상으로 진동하는 barotropic 모드.</li>
+  <li>(1,-1): 반대 위상의 baroclinic 모드.</li>
+  <li>진동주파수는 각각 ω₁=Ω, ω₂=√3 Ω 이다.</li>
+</ul>
+
+<p>
+즉, 행렬의 고유분해가 대기 중 두 가지 독립적인 모드를 자연스럽게 분리해 준다. 다층 primitive equation 모델에서도 동일한 수학 구조가 나타난다.
+</p>
+
+<hr>
+
+<p>
+위 초안은 Boas 3장의 핵심 내용(행 소거, 랭크, 행렬식, Cramer 공식, 벡터·직선·평면, 내적·외적, 고유값·대각화)을 학부 2학년 대기과학 전공 수업용으로 정리한 것이다.<span></span> [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/65877188/0d1e6ef9-6b9a-4e9f-a968-2069f836cec7/Boas_3jang.pdf)
+실제 강의에서는 각 절마다 손으로 풀 수 있는 짧은 연습문제와 대기 파동, 경계층, 기압면·전선 기하 등과 연결된 응용 예제를 추가하고, 필요하면 파이썬/NumPy 코드 스니펫으로 행렬 연산과 고유값 계산을 실습하게 하면 좋다.
+</p>
+
+</body>
+</html>
