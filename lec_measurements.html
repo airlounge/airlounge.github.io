@@ -57,14 +57,34 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 .h3s{font-size:1.2rem;color:var(--deep);margin-bottom:1.5rem}
 .h3m{font-size:1.1rem;color:var(--deep);margin:3rem 0 1.5rem}
 
-/* --- [추가됨] 플로팅 버튼 스타일 --- */
+/* --- [수정됨] Top Index Link & Floating Top Button --- */
+.top-home-btn {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    z-index: 10;
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 30px;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+.top-home-btn:hover {
+    background: var(--accent);
+    color: var(--white);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
 .floating-btns {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     z-index: 1000;
     opacity: 0;
     pointer-events: none;
@@ -97,20 +117,14 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
 }
-.f-btn.idx {
-    background: var(--white);
-    color: var(--deep);
-}
-.f-btn.idx:hover {
-    background: var(--light);
-    color: var(--teal);
-}
 /* --- --------------------------- --- */
 </style>
 </head>
 <body>
 
 <section class="hero" id="top">
+<a href="index.html" class="top-home-btn">← Home</a>
+
 <div class="hero-content">
 <h1>대기관측 및 분석 1</h1>
 <p class="sub">Atmospheric Observation & Analysis</p>
@@ -120,7 +134,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 </div>
 </section>
 
-<nav class="sn" id="nav-index"><div class="sn-i">
+<nav class="sn"><div class="sn-i">
 <a class="nl" href="#s1">01 강의소개</a><a class="nl" href="#s2">02 관측역사</a><a class="nl" href="#s3">03 위성관측</a><a class="nl" href="#s4">04 센서</a><a class="nl" href="#s5">05 CO₂</a><a class="nl" href="#s6">06 시료채취</a><a class="nl" href="#s7">07 보고서</a><a class="nl" href="#s8">08 현장실습</a>
 </div></nav>
 
@@ -330,7 +344,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 </footer>
 
 <div class="floating-btns" id="floatNav">
-    <a href="#nav-index" class="f-btn idx" title="목차로 이동">목차</a>
     <a href="#top" class="f-btn" title="맨 위로">TOP</a>
 </div>
 
@@ -344,7 +357,7 @@ window.addEventListener('scroll',()=>{
   let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)c=s.id});
   links.forEach(l=>{l.style.color=l.getAttribute('href')==='#'+c?'#14B8A6':'rgba(255,255,255,.6)';l.style.borderBottomColor=l.getAttribute('href')==='#'+c?'#14B8A6':'transparent'});
   
-  // [추가됨] 스크롤 시 플로팅 버튼 표시 로직
+  // 스크롤 시 플로팅 버튼 표시 로직
   const floatNav = document.getElementById('floatNav');
   if(window.scrollY > 400) {
     floatNav.classList.add('show');
