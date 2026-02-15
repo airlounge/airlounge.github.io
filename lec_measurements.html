@@ -56,6 +56,56 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 .ws{background:var(--white);max-width:100%;padding:5rem calc((100% - 1100px)/2 + 1.5rem)}
 .h3s{font-size:1.2rem;color:var(--deep);margin-bottom:1.5rem}
 .h3m{font-size:1.1rem;color:var(--deep);margin:3rem 0 1.5rem}
+
+/* --- [추가됨] 플로팅 버튼 스타일 --- */
+.floating-btns {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.4s, transform 0.4s;
+}
+.floating-btns.show {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+.f-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    transition: all 0.3s;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.f-btn:hover {
+    background: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
+}
+.f-btn.idx {
+    background: var(--white);
+    color: var(--deep);
+}
+.f-btn.idx:hover {
+    background: var(--light);
+    color: var(--teal);
+}
+/* --- --------------------------- --- */
 </style>
 </head>
 <body>
@@ -64,17 +114,16 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 <div class="hero-content">
 <h1>대기관측 및 분석 1</h1>
 <p class="sub">Atmospheric Observation & Analysis</p>
-<!-- <p class="info"><strong>부산대학교 대기환경과학과</strong> · 박창현 (Dr. Changhyoun Park) · 2013 Spring</p> --> 
+ 
 <p class="info"><strong> Pusan National Univ. </strong> · Dr. Changhyoun Park </p>
 <p class="sh">↓ 아래로 스크롤</p>
 </div>
 </section>
 
-<nav class="sn"><div class="sn-i">
+<nav class="sn" id="nav-index"><div class="sn-i">
 <a class="nl" href="#s1">01 강의소개</a><a class="nl" href="#s2">02 관측역사</a><a class="nl" href="#s3">03 위성관측</a><a class="nl" href="#s4">04 센서</a><a class="nl" href="#s5">05 CO₂</a><a class="nl" href="#s6">06 시료채취</a><a class="nl" href="#s7">07 보고서</a><a class="nl" href="#s8">08 현장실습</a>
 </div></nav>
 
-<!-- 01 강의소개 -->
 <div class="s" id="s1">
 <div class="sh2 fu"><span class="snum">01</span><h2 class="st">강의 소개 및 수업 안내</h2><p class="ste">Course Introduction & Guidelines</p><div class="sd"></div></div>
 <h3 class="h3s fu">수업 스케줄</h3>
@@ -109,7 +158,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 </div>
 </div>
 
-<!-- 02 관측역사 -->
 <div class="ws" id="s2">
 <div class="sh2 fu"><span class="snum">02</span><h2 class="st">관측의 역사</h2><p class="ste">History of Atmospheric Measurements</p><div class="sd"></div></div>
 <div class="sp fu">
@@ -134,7 +182,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 </div>
 </div>
 
-<!-- 03 위성관측 -->
 <div class="s" id="s3">
 <div class="sh2 fu"><span class="snum">03</span><h2 class="st">위성 관측 시스템</h2><p class="ste">Satellite Observation Systems</p><div class="sd"></div></div>
 <p class="fu" style="color:var(--muted);margin-bottom:2rem">NASA의 <strong style="color:var(--deep)">Earth Observing System (EOS)</strong>은 다양한 위성으로 대기·해양·지표를 관측합니다. <strong style="color:var(--deep)">A-Train</strong>은 7개 위성이 수 분 간격으로 배열된 위성 군집입니다.</p>
@@ -157,7 +204,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 </tbody></table></div>
 </div>
 
-<!-- 04 센서 -->
 <div class="ws" id="s4">
 <div class="sh2 fu"><span class="snum">04</span><h2 class="st">기온·습도 센서</h2><p class="ste">Temperature & Relative Humidity Sensors</p><div class="sd"></div></div>
 <div class="cg c3 fu" style="margin-bottom:2rem">
@@ -186,7 +232,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 <div class="wb fu"><p><strong>⚠ 배선 순서:</strong> ① Blue (접지) → ② Black (온도) → ③ White (습도) → ④ Clear (Shield) → ⑤ Brown (전원, 마지막)</p></div>
 </div>
 
-<!-- 05 CO2 -->
 <div class="s" id="s5">
 <div class="sh2 fu"><span class="snum">05</span><h2 class="st">CO₂ 관측 원리</h2><p class="ste">CO₂ Measurement Principles (NDIR)</p><div class="sd"></div></div>
 <div class="cg c2 fu">
@@ -212,7 +257,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 </tbody></table></div>
 </div>
 
-<!-- 06 시료채취 -->
 <div class="ws" id="s6">
 <div class="sh2 fu"><span class="snum">06</span><h2 class="st">대기 시료 채취</h2><p class="ste">Ambient Air Sampling</p><div class="sd"></div></div>
 <div class="hb fu"><h3>기본 요건</h3><p>특정 장소·시간의 대기를 대표하는 시료를 채취하여 질량/부피 농도로 평가할 수 있어야 하며, 시료의 화학적·물리적 특성을 원치 않는 방식으로 변화시키지 않아야 합니다.</p></div>
@@ -231,7 +275,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 </div>
 </div>
 
-<!-- 07 보고서 -->
 <div class="s" id="s7">
 <div class="sh2 fu"><span class="snum">07</span><h2 class="st">실험보고서 작성법</h2><p class="ste">Lab Report Writing Guide</p><div class="sd"></div></div>
 <div class="fu" style="overflow-x:auto"><table class="tb">
@@ -263,7 +306,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 </div>
 </div>
 
-<!-- 08 현장실습 -->
 <div class="ws" id="s8">
 <div class="sh2 fu"><span class="snum">08</span><h2 class="st">현장 실습 안내</h2><p class="ste">Field Practice & Observation</p><div class="sd"></div></div>
 <div class="sp fu">
@@ -287,6 +329,11 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;paddi
 <p style="margin-top:.5rem">박창현 (Dr. Changhyoun Park) · 2013 Spring Semester</p>
 </footer>
 
+<div class="floating-btns" id="floatNav">
+    <a href="#nav-index" class="f-btn idx" title="목차로 이동">목차</a>
+    <a href="#top" class="f-btn" title="맨 위로">TOP</a>
+</div>
+
 <script>
 const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('v')})},{threshold:.1});
 document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
@@ -294,8 +341,16 @@ document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
 const sections=document.querySelectorAll('[id^="s"]');
 const links=document.querySelectorAll('.nl');
 window.addEventListener('scroll',()=>{
-  let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)c=s.id});
-  links.forEach(l=>{l.style.color=l.getAttribute('href')==='#'+c?'#14B8A6':'rgba(255,255,255,.6)';l.style.borderBottomColor=l.getAttribute('href')==='#'+c?'#14B8A6':'transparent'});
+  let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)c=s.id});
+  links.forEach(l=>{l.style.color=l.getAttribute('href')==='#'+c?'#14B8A6':'rgba(255,255,255,.6)';l.style.borderBottomColor=l.getAttribute('href')==='#'+c?'#14B8A6':'transparent'});
+  
+  // [추가됨] 스크롤 시 플로팅 버튼 표시 로직
+  const floatNav = document.getElementById('floatNav');
+  if(window.scrollY > 400) {
+    floatNav.classList.add('show');
+  } else {
+    floatNav.classList.remove('show');
+  }
 });
 </script>
 </body>
